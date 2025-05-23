@@ -19,7 +19,7 @@ export default function Header() {
             <Image
               src="/images/RecipeRealm.png"
               alt="RecipeRealm Logo"
-              width={130}
+              width={110}
               height={20}
               className="object-contain"
             />
@@ -54,7 +54,7 @@ export default function Header() {
             <input
               type="text"
               placeholder="Search recipes..."
-              className="w-64 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm w-52 sm:w-64"
             />
           </div>
 

@@ -16,16 +16,20 @@ export default function LoginPage() {
     <div className="relative min-h-screen flex justify-center items-center overflow-hidden">
       {/* Background image with fallback */}
       <div
-        className="absolute inset-0 bg-[url('/images/Ndole.webp')] bg-cover bg-center blur-sm bg-gray-200"
+        className="absolute inset-0 bg-[url('/images/Ndole.webp')] bg-cover bg-center blur-sm bg-gray-100"
       ></div>
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/30"></div>
+      <div className="absolute inset-0 bg-black/10"></div>
 
       {/* Login Card */}
       <div className="w-full max-w-lg px-4 py-8 sm:max-w-xl sm:px-10 sm:py-10 bg-white/90 rounded-2xl shadow-2xl backdrop-blur-md mx-4 z-10">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8 tracking-wide">
+        <h1 className="text-4xl font-bold text-center text-orange-700 mb-8 tracking-wide">
           RecipeRealm
         </h1>
+
+         <h2 className="text-4xl font-bold text-center text-gray-800 mb-8 tracking-wide">
+          LogIn To Your Account
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -57,6 +61,19 @@ export default function LoginPage() {
               placeholder="Enter your password"
             />
           </div>
+
+            {/* ✅ Remember Me & Forgot Password Row */}
+    <div className="flex justify-between items-center text-sm text-gray-600">
+    <label className="flex items-center space-x-2">
+      <input type="checkbox" className="form-checkbox text-orange-600" />
+      <span>Remember me</span>
+    </label>
+    <Link href="/forgot-password" className="text-orange-600 hover:underline">
+      Forgot password?
+    </Link>
+  </div>
+
+          {/* Submit Button */}
 
           <button
             type="submit"

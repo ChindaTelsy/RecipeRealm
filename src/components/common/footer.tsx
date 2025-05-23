@@ -1,8 +1,12 @@
+import { Merriweather } from 'next/font/google';
+
+const MerriweatherFont = Merriweather({ subsets: ['latin'], weight: ['400'] });
+
 export default function Footer() {
   return (
-    <footer className="bg-white-100 py-8 mt-16">
+    <footer className="bg-white-100 py-4 mt-4">
       <div className="container mx-auto px-6 max-w-3xl">
-        <p className="text-gray-700 text-sm leading-relaxed text-center">
+        <p className={`${MerriweatherFont.className} text-gray-700 text-xl leading-relaxed text-center`}>
           <strong className="text-gray-800 font-semibold">RecipeRealm</strong> is your go-to platform for discovering,
           sharing, and saving delicious recipes from around the world. Whether you're a beginner or a seasoned chef,
           find inspiration for your next meal with our curated collection of recipes.
@@ -15,6 +19,7 @@ export default function Footer() {
             <h3 className="text-gray-800 font-semibold mb-2">Quick Links</h3>
             <ul className="text-gray-600 text-sm space-y-1">
               <li><a href="/about" className="hover:underline">About Us</a></li>
+               <li><a href="/about" className="hover:underline">News letter</a></li>
             </ul>
           </div>
 
