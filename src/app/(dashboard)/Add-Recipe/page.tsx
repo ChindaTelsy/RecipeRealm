@@ -23,6 +23,10 @@ export default function AddRecipePage() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File is too large! Please upload an image smaller than 5MB.');
+        return;
+      }
       setImage(file);
       setPreview(URL.createObjectURL(file));
     }
@@ -110,14 +114,18 @@ export default function AddRecipePage() {
             </select>
           </div>
 
+          {/* Styled Image Upload Input */}
           <div>
             <label className="block text-sm font-medium mb-2">Recipe Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="w-full"
-            />
+            <label className="cursor-pointer text-orange-600 underline">
+              Choose an image
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </label>
             {preview && (
               <div className="mt-4">
                 <Image

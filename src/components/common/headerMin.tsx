@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PlusCircle, CircleUser } from 'lucide-react';
 
-export default function headerMin() {
+export default function HeaderMin() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
 
@@ -30,22 +30,31 @@ export default function headerMin() {
 
         {/* Desktop actions */}
         <div className="hidden md:flex items-center gap-6">
-          <Link
-           href="/"
-            className="text-gray-700 hover:text-orange-600 transition px-4 text-lg font-semibold relative after:absolute after:right-0 after:text-gray-400 after:text-base after:top-1/2 after:-translate-y-1/2"
+          
+           <Link
+           href="/Home"
+            className="text-gray-700 hover:text-orange-600 transition px-4 text-lg font-semibold relative after:absolute after:right-0 after:text-gray-200 after:text-base after:top-1/2 after:-translate-y-1/2"
              >
               Home
            </Link>
           
-     <Link
+           <Link
             href="/Add-Recipe"
             className="flex items-center gap-1 text-orange-600 hover:text-orange-800 font-medium text-sm"
           >
             <PlusCircle className="w-5 h-5" /> Add Recipe
           </Link>
+
           <Link href="/profile" className="hover:text-orange-600 transition">
-            <CircleUser className="w-6 h-6 text-gray-300" />
-          </Link>      
+            <CircleUser className="w-6 h-6 text-gray-500" />
+          </Link> 
+
+          <Link
+           href="/"
+            className="text-gray-700 hover:text-orange-600 transition px-4 text-lg font-semibold relative after:absolute after:right-0 after:text-gray-200 after:text-base after:top-1/2 after:-translate-y-1/2"
+             >
+              logout
+           </Link>     
           
           <input
             type="text"
@@ -113,8 +122,18 @@ export default function headerMin() {
               onClick={toggleMenu}
               className="text-gray-600 hover:text-orange-600 transition text-base font-normal"
             >
+              Welcome
+            </Link>
+
+            <Link
+              href="/Home"
+              onClick={toggleMenu}
+              className="text-gray-600 hover:text-orange-600 transition text-base font-normal"
+            >
               Home
             </Link>
+
+            
             <Link
               href="/add-recipe"
               onClick={toggleMenu}

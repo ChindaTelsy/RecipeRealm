@@ -1,4 +1,5 @@
-import HomePage from './Homepage/page'; // or wherever your HomePage is
+// src/app/page.tsx
+import { redirect } from 'next/navigation';
 
 export const metadata = {
   title: 'RecipeRealm | Home',
@@ -21,6 +22,6 @@ export const metadata = {
   },
 };
 
-export default function Page() {
-  return <HomePage />;
+export default function Home() {
+  redirect('/Welcomepage'); // Redirect to the Welcome page
 }

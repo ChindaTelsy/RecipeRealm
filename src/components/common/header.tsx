@@ -32,7 +32,7 @@ export default function Header() {
     href="/"
     className="text-gray-700 hover:text-orange-600 transition px-4 text-lg font-semibold relative after:absolute after:right-0 after:text-gray-400 after:text-base after:top-1/2 after:-translate-y-1/2"
   >
-    Home
+    Welcome
   </Link>
   <Link
     href="/login"
@@ -124,7 +124,7 @@ export default function Header() {
               className="text-gray-600 hover:text-orange-600 transition text-base font-normal"
               onClick={toggleMenu}
             >
-              Home
+              Welcome
             </Link>
             <Link
               href="/login"
