@@ -33,7 +33,7 @@ export default function LoginPage() {
         </h1>
 
         <h2 className="text-4xl font-bold text-center text-gray-800 mb-8 tracking-wide">
-          Log In To Your Account
+          LogIn To Your Account
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">

@@ -2,8 +2,16 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
+import { addRecipe } from '@/store/RecipeSlice'; // Adjust path if needed
+import { v4 as uuidv4 } from 'uuid';
+
+// Import the VisibleOn type to ensure type safety
+import type { VisibleOn } from '@/store/RecipeSlice';
 
 export default function AddRecipePage() {
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [ingredients, setIngredients] = useState('');
@@ -35,18 +43,42 @@ export default function AddRecipePage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('ingredients', ingredients);
-    formData.append('instructions', instructions);
-    formData.append('category', category);
-    if (image) {
-      formData.append('image', image);
+    if (!title || !description || !category || !ingredients || !instructions) {
+      alert('Please fill in all required fields.');
+      return;
     }
 
-    console.log({ title, description, ingredients, instructions, category, image });
+    // Convert comma separated ingredients string to array and trim whitespace
+    const ingredientsArray = ingredients.split(',').map(item => item.trim()).filter(item => item.length > 0);
+
+    // Use preview URL as image URL placeholder (you’d replace this with real upload in a real app)
+    const imageUrl = preview || '';
+
+    const newRecipe = {
+      id: uuidv4(), // Add unique ID (though this will be overridden in the reducer)
+      title,
+      description,
+      ingredients: ingredientsArray,
+      instructions,
+      category,
+      image: imageUrl,
+      rating: 0,
+      liked: false,
+      visibleOn: 'home' as VisibleOn, // Use a valid VisibleOn value
+    };
+
+    dispatch(addRecipe(newRecipe));
+
     alert('Recipe submitted!');
+
+    // Reset form fields
+    setTitle('');
+    setDescription('');
+    setIngredients('');
+    setInstructions('');
+    setCategory('');
+    setImage(null);
+    setPreview(null);
   };
 
   return (
@@ -72,19 +104,20 @@ export default function AddRecipePage() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              className="w-full px-5 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
               rows={4}
+              className="w-full px-5 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-2">Ingredients (comma separated)</label>
-            <input
-              type="text"
+            <textarea
               value={ingredients}
               onChange={(e) => setIngredients(e.target.value)}
               required
+              rows={3}
               className="w-full px-5 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+              placeholder="e.g. 1 cup flour, 2 eggs, 1/2 cup sugar"
             />
           </div>
 
@@ -94,8 +127,9 @@ export default function AddRecipePage() {
               value={instructions}
               onChange={(e) => setInstructions(e.target.value)}
               required
-              className="w-full px-5 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
               rows={5}
+              className="w-full px-5 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+              placeholder="Step-by-step instructions here..."
             />
           </div>
 
@@ -114,7 +148,6 @@ export default function AddRecipePage() {
             </select>
           </div>
 
-          {/* Styled Image Upload Input */}
           <div>
             <label className="block text-sm font-medium mb-2">Recipe Image</label>
             <label className="cursor-pointer text-orange-600 underline">
@@ -145,6 +178,7 @@ export default function AddRecipePage() {
           >
             Submit Recipe
           </button>
+
         </form>
       </main>
     </div>

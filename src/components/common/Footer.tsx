@@ -1,9 +1,15 @@
-import { Merriweather } from 'next/font/google';
-import Link from 'next/link';
+'use client'
 
-const MerriweatherFont = Merriweather({ subsets: ['latin'], weight: ['400'] });
+import PrivacyPolicyModal from '@/components/common/PrivacyPolicyModal'
+import { Merriweather } from 'next/font/google'
+import Link from 'next/link'
+import { useState } from 'react'
+
+const MerriweatherFont = Merriweather({ subsets: ['latin'], weight: ['400'] })
 
 export default function Footer() {
+  const [isModalOpen, setModalOpen] = useState(false)
+
   return (
     <footer className="bg-white-100 shadow-md py-4 mt-4">
       <div className="container mx-auto px-6 max-w-3xl">
@@ -25,9 +31,10 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/newsletter" className="hover:underline">
-                  Newsletter
-                </Link>
+                {/* Changed from Link to button to open modal */}
+                <button onClick={() => setModalOpen(true)} className="hover:underline text-left">
+                  Privacy Policy
+                </button>
               </li>
             </ul>
           </div>
@@ -56,6 +63,9 @@ export default function Footer() {
           © {new Date().getFullYear()} RecipeRealm. All rights reserved.
         </p>
       </div>
+
+      {/* Modal */}
+      <PrivacyPolicyModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
     </footer>
-  );
+  )
 }

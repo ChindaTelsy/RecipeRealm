@@ -1,105 +1,67 @@
-
 'use client';
-import { useState } from 'react';
+
+import { useMemo } from 'react';
 import Link from 'next/link';
-import { Playfair_Display } from 'next/font/google';
-import { Recipe } from '@/model/Recipe';
+import { useSearchParams } from 'next/navigation';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '@/store/store';
+import { toggleLike, setRating } from '@/store/RecipeSlice';
 import RecipeCard from '@/components/RecipeCard';
+import { motion } from 'framer-motion';
 
-const Playfair_DisplayFont = Playfair_Display({ subsets: ['latin'], weight: ['400'] });
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  },
+};
 
-
-const initialRecipes: Recipe[] = [
-  {
-    id: '1',
-    title: 'Ndolé',
-    description: 'A bitterleaf stew with peanuts and meat.',
-    image: '/images/ndole-1.webp',
-    rating: 5,
-    liked: false,
-  },
-  {
-    id: '2',
-    title: 'Eru',
-    description: 'A flavorful mix of green leaves and water fufu.',
-    image: '/images/Eru.jpeg',
-    rating: 4,
-    liked: false,
-  },
-  {
-    id: '3',
-    title: 'Jollof Rice',
-    description: 'Classic West African rice cooked in spicy tomato sauce.',
-    image: '/images/jolof rice.jpeg',
-    rating: 4,
-    liked: false,
-  },
-  {
-    id: '4',
-    title: 'Fufu & Light Soup',
-    description: 'Ghanaian fufu served with spicy light soup.',
-    image: '/images/Fufu and light soup.jpeg',
-    rating: 3,
-    liked: false,
-  },
-  {
-    id: '5',
-    title: 'Spaghetti Bolognese',
-    description: 'Italian classic with rich meat sauce.',
-    image: '/images/spaghetti-bolognese.jpeg',
-    rating: 5,
-    liked: false,
-  },
-  {
-    id: '6',
-    title: 'Chicken Curry',
-    description: 'Aromatic curry with tender chicken pieces.',
-    image: '/images/chicken curry.jpeg',
-    rating: 4,
-    liked: false,
-  },
-  {
-    id: '7',
-    title: 'Puff Puff',
-    description: 'A local breakfast with a beautiful texture.',
-    image: '/images/puff puff.jpeg',
-    rating: 4,
-    liked: false,
-  },
-  {
-    id: '8',
-    title: 'Folere',
-    description: 'Local refreshing drink to brighten your day.',
-    image: '/images/Folere.jpg',
-    rating: 4,
-    liked: false,
-  },
-];
-
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function Welcomepage() {
-  const [recipes, setRecipes] = useState(initialRecipes);
+  const dispatch = useDispatch<AppDispatch>();
+  const recipes = useSelector((state: RootState) => state.recipes.recipes);
+
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query')?.toLowerCase() || '';
+
+  const visibleRecipes = useMemo(() => {
+    return recipes.filter(recipe => 
+      recipe.visibleOn === 'welcome' || recipe.visibleOn === 'both'
+    );
+  }, [recipes]);
+
+  const filteredRecipes = useMemo(() => {
+    if (!query) return [];
+    return visibleRecipes.filter(recipe =>
+      recipe.title.toLowerCase().includes(query) ||
+      recipe.description.toLowerCase().includes(query)
+    );
+  }, [query, visibleRecipes]);
 
   const handleLike = (id: string) => {
-    setRecipes((prev) =>
-      prev.map((r) =>
-        r.id === id ? { ...r, liked: !r.liked } : r
-      )
-    );
+    dispatch(toggleLike(id));
   };
 
   const handleRate = (id: string, rating: number) => {
-    setRecipes((prev) =>
-      prev.map((r) =>
-        r.id === id ? { ...r, rating } : r
-      )
-    );
+    dispatch(setRating({ id, rating }));
   };
 
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="text-center mb-8">
-        <p className={`${Playfair_DisplayFont.className} text-2xl  font-medium text-gray-700`}>
+        <h1 className="font-playfair text-3xl font-semibold mb-6 text-center">
+          {query ? `Search results for "${query}"` : 'Welcome to RecipeRealm'}
+        </h1>
+
+        {query && filteredRecipes.length === 0 && (
+          <p className="text-gray-500">No recipes found matching your search.</p>
+        )}
+        <p className="font-playfair text-2xl font-medium text-gray-700">
           To save and share content, create a free account and start posting today.{' '}
           <Link href="/signup" className="text-orange-500 hover:underline">
             Sign up now!
@@ -107,16 +69,22 @@ export default function Welcomepage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {recipes.slice(0, 12).map((recipe) => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-            onLike={handleLike}
-            onRate={handleRate}
-          />
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {(query ? filteredRecipes : visibleRecipes.slice(0, 12)).map((recipe) => (
+          <motion.div key={recipe.id} variants={cardVariants}>
+            <RecipeCard
+              recipe={recipe}
+              onLike={handleLike}
+              onRate={handleRate}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </main>
   );
 }

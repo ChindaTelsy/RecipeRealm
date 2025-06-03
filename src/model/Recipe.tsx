@@ -11,4 +11,5 @@ export interface Recipe {
 // Extended recipe used by the user side with extra metadata
 export interface UserRecipe extends Recipe {
   category: string;
+  createdAt: Date;
 }

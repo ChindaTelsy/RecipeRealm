@@ -1,11 +1,18 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports =
+{
   content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './pages/**/*.{ts,tsx}', // if you have pages/
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        playfair: ['"Playfair Display"', 'serif'],
+      },
+    },
   },
   plugins: [],
-}
+};
+

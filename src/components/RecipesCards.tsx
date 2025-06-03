@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Recipe } from '@/store/RecipeSlice';  // <- Import Recipe here
 import { Star, Heart } from 'lucide-react';
-import { UserRecipe } from '@/model/Recipe';
 
 interface RecipeProps {
-  UserRecipe: UserRecipe;
+  recipe: Recipe;     // Use Recipe here, not UserRecipe
   liked?: boolean;
   rating?: number;
   onLike?: (id: string) => void;
@@ -12,13 +12,13 @@ interface RecipeProps {
 }
 
 export default function RecipesCards({
-  UserRecipe,
+  recipe,
   liked,
   rating,
   onLike,
-  onRate
+  onRate,
 }: RecipeProps) {
-  const { id, title, image, category } = UserRecipe;
+  const { id, title, image, category, description } = recipe;
 
   return (
     <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden relative cursor-pointer">
@@ -48,6 +48,7 @@ export default function RecipesCards({
           </Link>
         </h2>
         <p className="text-sm text-gray-500">{category}</p>
+        <p className="text-sm text-gray-600 mt-1 line-clamp-2">{description}</p>
 
         <div className="flex mt-2 text-yellow-400">
           {[...Array(5)].map((_, idx) => {

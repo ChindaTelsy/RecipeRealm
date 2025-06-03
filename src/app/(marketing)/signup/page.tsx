@@ -40,7 +40,7 @@ export default function SignUpPage() {
         </h1>
 
         <h2 className="text-4xl font-bold text-center text-gray-800 mb-8 tracking-wide">
-          Sign Up For Recipes
+          SignUp For Recipes
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
