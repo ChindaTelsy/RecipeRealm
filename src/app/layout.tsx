@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import '@/styles/globals.css';
 import { Providers } from "./Provider";
 import { FirebaseAuthProvider } from './FirebaseAuthProvider';
+import I18nProvider from '@/components/I18nProvider';
 
 
 export const metadata = {
@@ -22,7 +23,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="flex flex-col min-h-screen">
         <Providers>
-          <FirebaseAuthProvider>{children}</FirebaseAuthProvider>
+          <FirebaseAuthProvider>
+            <I18nProvider>
+              {children}
+            </I18nProvider>
+          </FirebaseAuthProvider>
         </Providers>
       </body>
     </html>

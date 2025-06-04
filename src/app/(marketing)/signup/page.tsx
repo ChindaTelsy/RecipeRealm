@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const { t } = useTranslation("signup");
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -16,15 +18,15 @@ export default function SignUpPage() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      alert(t("passwordMismatch"));
       return;
     }
 
     console.log("Sign Up submitted", { username, email, password, confirmPassword });
 
-    // You can add your signup logic here.
+    // Add your sign-up logic here.
     // After success, you might want to redirect:
-    // router.push('/somewhere');
+    // router.push('/dashboard');
   };
 
   return (
@@ -35,18 +37,18 @@ export default function SignUpPage() {
       <div className="absolute inset-0 bg-black/20 backdrop-blur-sm z-0"></div>
 
       <div className="w-full max-w-lg px-4 py-8 sm:max-w-xl sm:px-10 sm:py-10 bg-white/90 rounded-2xl shadow-2xl backdrop-blur-md mx-4 z-10">
-        <h1 className="text-4xl font-bold text-center text-orange-700 mb-8 tracking-wide">
+        <h1 className="text-4xl font-bold text-center text-orange-700 mb-4 tracking-wide">
           RecipeRealm
         </h1>
 
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-8 tracking-wide">
-          SignUp For Recipes
+        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-8 tracking-wide">
+          {t("signup.title")}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-              Username
+              {t("signup.username")}
             </label>
             <input
               type="text"
@@ -55,13 +57,13 @@ export default function SignUpPage() {
               onChange={(e) => setUsername(e.target.value)}
               required
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-              placeholder="Enter your username"
+              placeholder={t("signup.placeholderUsername")}
             />
           </div>
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
+              {t("signup.email")}
             </label>
             <input
               type="email"
@@ -70,13 +72,13 @@ export default function SignUpPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-              placeholder="Enter your email"
+              placeholder={t("signup.placeholderEmail")}
             />
           </div>
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
+              {t("password")}
             </label>
             <input
               type="password"
@@ -85,13 +87,13 @@ export default function SignUpPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-              placeholder="Enter your password"
+              placeholder={t("signup.placeholderPassword")}
             />
           </div>
 
           <div>
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-              Confirm Password
+              {t("signup.confirmPassword")}
             </label>
             <input
               type="password"
@@ -100,7 +102,7 @@ export default function SignUpPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-              placeholder="Confirm your password"
+              placeholder={t("signup.placeholderConfirmPassword")}
             />
           </div>
 
@@ -108,26 +110,18 @@ export default function SignUpPage() {
             type="submit"
             className="w-full bg-orange-600 text-white py-2 rounded-md hover:bg-orange-700 transition"
           >
-            Sign Up
+            {t("signup.submit")}
           </button>
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-600">
-          Already have an account?{" "}
+          {t("signup.alreadyHaveAccount")}{" "}
           <Link href="/login" className="text-orange-600 hover:underline">
-            Login
+            {t("signup.login")}
           </Link>
         </p>
-        <p className="mt-4 text-center text-sm text-gray-600">
-          By signing up, you agree to our{" "}
-          <Link href="/terms" className="text-orange-600 hover:underline">
-            Terms of Service
-          </Link>{" "}
-          and{" "}
-          <Link href="/privacy" className="text-orange-600 hover:underline">
-            Privacy Policy
-          </Link>.
-        </p>
+
+       
       </div>
     </div>
   );

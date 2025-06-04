@@ -1,0 +1,7 @@
+{
+  "title": "Welcome to RecipeRealm",
+  "searchResults": "Search results for \"{{query}}\"",
+  "noResults": "No recipes found matching your search.",
+  "cta": "To save and share content, create a free account and start posting today.",
+  "signup": "Sign up now!"
+}

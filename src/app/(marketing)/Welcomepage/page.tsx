@@ -8,6 +8,7 @@ import { RootState, AppDispatch } from '@/store/store';
 import { toggleLike, setRating } from '@/store/RecipeSlice';
 import RecipeCard from '@/components/RecipeCard';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,6 +29,8 @@ export default function Welcomepage() {
 
   const searchParams = useSearchParams();
   const query = searchParams.get('query')?.toLowerCase() || '';
+
+  const { t } = useTranslation('welcome');
 
   const visibleRecipes = useMemo(() => {
     return recipes.filter(recipe => 
@@ -53,21 +56,24 @@ export default function Welcomepage() {
 
   return (
     <main className="container mx-auto px-4 py-8">
+      
       <div className="text-center mb-8">
         <h1 className="font-playfair text-3xl font-semibold mb-6 text-center">
-          {query ? `Search results for "${query}"` : 'Welcome to RecipeRealm'}
+          {query ? t('searchResults', { query }) : t('title')}
         </h1>
 
         {query && filteredRecipes.length === 0 && (
-          <p className="text-gray-500">No recipes found matching your search.</p>
+          <p className="text-gray-500">{t('noResults')}</p>
         )}
+
         <p className="font-playfair text-2xl font-medium text-gray-700">
-          To save and share content, create a free account and start posting today.{' '}
+          {t('cta')}{' '}
           <Link href="/signup" className="text-orange-500 hover:underline">
-            Sign up now!
+            {t('signup')}
           </Link>
         </p>
       </div>
+      
 
       <motion.div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"

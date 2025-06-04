@@ -81,7 +81,7 @@ export default function HomePage() {
   return (
    <div className="min-h-screen flex flex-col">
       <main className="flex-grow px-6 py-8">
-        <h1 className="font-playfair text-2xl italic font-semibold mb-6">
+        <h1 className="font-playfair text-2xl font-semibold mb-6">
           {query ? `Search results for "${query}"` : 'Explore Recipes by Category'}
         </h1>
 

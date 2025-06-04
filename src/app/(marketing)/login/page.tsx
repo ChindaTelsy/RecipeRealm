@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
   const router = useRouter();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { t } = useTranslation("login");
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -33,13 +35,13 @@ export default function LoginPage() {
         </h1>
 
         <h2 className="text-4xl font-bold text-center text-gray-800 mb-8 tracking-wide">
-          LogIn To Your Account
+          {t("login.title")}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-              Username
+              {t("login.username")}
             </label>
             <input
               type="text"
@@ -48,13 +50,13 @@ export default function LoginPage() {
               onChange={(e) => setUsername(e.target.value)}
               required
               className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
-              placeholder="Enter your username"
+              placeholder={t("login.placeholderUsername")}
             />
           </div>
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
+              {t("login.password")}
             </label>
             <input
               type="password"
@@ -63,17 +65,17 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
-              placeholder="Enter your password"
+              placeholder={t("login.placeholderPassword")}
             />
           </div>
 
           <div className="flex justify-between items-center text-sm text-gray-600">
             <label className="flex items-center space-x-2">
               <input type="checkbox" className="form-checkbox text-orange-600" />
-              <span>Remember me</span>
+              <span>{t("login.rememberMe")}</span>
             </label>
             <Link href="/forgot-password" className="text-orange-600 hover:underline">
-              Forgot password?
+              {t("login.forgotPassword")}
             </Link>
           </div>
 
@@ -81,17 +83,18 @@ export default function LoginPage() {
             type="submit"
             className="w-full bg-orange-600 text-white py-3 rounded-md hover:bg-orange-700 transition"
           >
-            Login
+            {t("login.submit")}
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">
-          Don't have an account?{" "}
+          {t("login.noAccount")}{" "}
           <Link href="/signup" className="text-orange-600 hover:underline">
-            Sign Up
+            {t("login.signUp")}
           </Link>
         </p>
       </div>
     </div>
   );
 }
+
